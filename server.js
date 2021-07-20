@@ -1,4 +1,7 @@
-import { ApolloServer, gql } from 'apollo-server'
+import { ApolloServer, gql } from 'apollo-server';
+import { PrismaClient } from '.prisma/client';
+
+const client = PrismaClient()
 
 const typeDefs = gql`
     type Movie {
