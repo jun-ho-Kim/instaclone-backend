@@ -13,8 +13,8 @@ generator client {
 model Movie {
   id Int @id @default(autoincrement())
   title String
+  description String?
   year Int
-  genre String?
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
