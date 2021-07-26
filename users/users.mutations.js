@@ -39,9 +39,6 @@ export default {
                         password: uglypassword,
                     }
                 })
-
-
-                const token = await jwt.sign({id: user.id}, process.env.SERCRET_KEY)
             } catch(e) {
                 return e;
             };
@@ -63,7 +60,7 @@ export default {
                 }
             };
 
-            const token = await jwt.sign(user.id, process.env.SERCRET_KEY)
+            const token = await jwt.sign(user.id, process.env.SERCRET_KEY);
             console.log("token", token)
             return {
                 ok: true,
