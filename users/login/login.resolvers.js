@@ -21,7 +21,7 @@ export default {
                 }
             };
 
-            const token = await jwt.sign(user.id, process.env.SERCRET_KEY);
+            const token = await jwt.sign(user.id, process.env.SECRET_KEY);
             console.log("token", token)
             return {
                 ok: true,

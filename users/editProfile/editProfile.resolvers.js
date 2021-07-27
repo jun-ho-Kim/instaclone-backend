@@ -1,5 +1,6 @@
 import client from "../../client";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export default {
     Mutation: {
@@ -11,15 +12,17 @@ export default {
                 email,
                 password: newPassword
             },
+            {loggedInUser}
         ) => {
             let uglyPassword = null;
             if(newPassword) {
                 uglyPassword = await bcrypt.hash(newPassword, 10);
             }
             console.log("uglyPassword", uglyPassword);
+            console.log("loggedInUser", loggedInUser);
             await client.user.update({
                 where: {
-                    id: 3
+                    id: loggedInUser.id
                 }, 
                 data: {
                     firstName,
