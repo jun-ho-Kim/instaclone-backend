@@ -1,6 +1,5 @@
-import bcrypt from "bcrypt";
-import client from '../client';
-import jwt from 'jsonwebtoken';
+import client from "../../client";
+import bcrypt from 'bcrypt';
 
 export default {
     Mutation: {
@@ -26,11 +25,9 @@ export default {
                 });
                 if(existingUser) {
                     throw new Error("This username/password is already taken");
-                    
-                }
-                console.log("existingUser",existingUser)
+                };
                 const uglypassword = await bcrypt.hash(password, 10);
-                return client.user.create({
+                await client.user.create({
                     data: {
                         firstName,
                         lastName,
@@ -38,34 +35,13 @@ export default {
                         email,
                         password: uglypassword,
                     }
-                })
+                });
+                return {
+                    ok: true
+                };
             } catch(e) {
                 return e;
             };
         },
-        login: async(_, {email, password}) => {
-            const user = await client.user.findFirst({where: {email}})
-            if(!user) {
-                return {
-                    ok: false,
-                    error: "이메일이 존재하지 않습니다."
-                }
-            };
-            console.log("user.password", user.password)
-            const passwordOK = await bcrypt.compare(password, user.password);
-            if(!passwordOK) {
-                return {
-                    ok: false,
-                    error: "비밀번호가 다릅니다."
-                }
-            };
-
-            const token = await jwt.sign(user.id, process.env.SERCRET_KEY);
-            console.log("token", token)
-            return {
-                ok: true,
-                token
-            }
-        }
     }
 }
