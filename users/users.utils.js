@@ -18,11 +18,12 @@ export const getUser = async (token) => {
     }
 };
 
-export const protectResolver = (user) => {
-    if(!user) {
+export const protectResolver = (ourResolver) => (root, args, context, info) => {
+    if(!context.loggedInUser) {
         return {
             ok: false,
             error: "유저를 찾을 수 없습니다."
         }
-    }
+    };
+    return ourResolver(root, args, context, info)
 }
