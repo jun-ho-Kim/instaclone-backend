@@ -16,4 +16,13 @@ export const getUser = async (token) => {
     } catch {
         return null;
     }
+};
+
+export const protectResolver = (user) => {
+    if(!user) {
+        return {
+            ok: false,
+            error: "유저를 찾을 수 없습니다."
+        }
+    }
 }
