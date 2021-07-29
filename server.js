@@ -19,7 +19,7 @@ const server = new ApolloServer({
         };
     },
 });
-
+app.use('/static', express.static("uploads"))
 app.use(logger('tiny'));
 server.applyMiddleware({app});
 app.listen({port: PORT}, 

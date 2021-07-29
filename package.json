@@ -2,7 +2,7 @@
   "name": "instaclone-backend",
   "version": "1.0.0",
   "scripts": {
-    "preinstall": "npx npm-force-resolutions",
+    "preinstall": "npx npm-force-resolutions@0.0.3",
     "dev": "nodemon --exec babel-node server.js --delay 2",
     "migrate": "npx prisma migrate dev --preview-feature",
     "studio": "npx prisma studio",
