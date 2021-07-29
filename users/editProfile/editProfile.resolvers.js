@@ -18,13 +18,13 @@ export default {
                 },
                 {loggedInUser, protectResolver}
             ) => {
-                const {filename, createReadStream } = await avartar;
                 protectResolver(loggedInUser);
-                let uglyPassword = null;s
+                let uglyPassword = null;
                 if(newPassword) {
                     uglyPassword = await bcrypt.hash(newPassword, 10);
                 }
                 console.log("loggedInUser", Boolean(loggedInUser));
+                const {filename, createReadStream } = await avartar;
                 const readStream = createReadStream();
                 const writeStream = createWriteStream(process.cwd() + '/uploads/' + filename);
                 readStream.pipe(writeStream)
