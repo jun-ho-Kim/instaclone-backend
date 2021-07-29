@@ -2,7 +2,8 @@
   "name": "instaclone-backend",
   "version": "1.0.0",
   "scripts": {
-    "dev": "nodemon --exec babel-node server.js",
+    "preinstall": "npx npm-force-resolutions",
+    "dev": "nodemon --exec babel-node server.js --delay 2",
     "migrate": "npx prisma migrate dev --preview-feature",
     "studio": "npx prisma studio",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -33,5 +34,9 @@
     "@babel/node": "^7.14.7",
     "@babel/preset-env": "^7.14.7",
     "nodemon": "^2.0.12"
+  },
+  "resolutions": {
+    "fs-capacitor": "^6.2.0",
+    "graphql-upload": "^11.0.0"
   }
 }

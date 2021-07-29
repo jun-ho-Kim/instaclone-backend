@@ -1,5 +1,6 @@
 import client from "../../client";
 import bcrypt from "bcrypt";
+import {createWriteStream} from 'fs'
 import { protectResolver } from "../users.utils";
 
 export default {
@@ -11,17 +12,22 @@ export default {
                     lastName,
                     userName,
                     email,
-                    password: newPassword
+                    password: newPassword,
+                    bio,
+                    avartar
                 },
                 {loggedInUser, protectResolver}
             ) => {
+                const {filename, createReadStream } = await avartar;
                 protectResolver(loggedInUser);
-                let uglyPassword = null;
+                let uglyPassword = null;s
                 if(newPassword) {
                     uglyPassword = await bcrypt.hash(newPassword, 10);
                 }
-                console.log("uglyPassword", uglyPassword);
-                console.log("loggedInUser", loggedInUser);
+                console.log("loggedInUser", Boolean(loggedInUser));
+                const readStream = createReadStream();
+                const writeStream = createWriteStream(process.cwd() + '/uploads/' + filename);
+                readStream.pipe(writeStream)
                 await client.user.update({
                     where: {
                         id: loggedInUser.id
@@ -31,8 +37,12 @@ export default {
                         lastName,
                         userName,
                         email,
-                        ...(uglyPassword&&{password:uglyPassword})
-                }});    
+                        ...(uglyPassword&&{password:uglyPassword}),
+                        bio,
+                }});
+                return {
+                    ok: true,
+                }   
             }
         ),
     },
