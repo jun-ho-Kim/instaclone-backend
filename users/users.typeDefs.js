@@ -7,9 +7,11 @@ export default gql`
         lastName: String
         userName: String!
         email: String!
-        createdAt: String!
-        updatedAt: String!
+        followers: [User]
+        following: [User]
         bio: String
         avartar: String
+        createdAt: String!
+        updatedAt: String!
     }
 `;
