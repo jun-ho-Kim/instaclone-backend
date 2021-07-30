@@ -3,13 +3,15 @@
 - [x] Create Account
 - [x] See Profile
 - [x] Login
-- [ ] Edit Profile
-- [ ] Follow User
-- [ ] Unfollow User
-- [ ] Change Avatar (Image Upload)
+- [x] Edit Profile
+- [x] Follow User
+- [x] Unfollow User
+- [x] Change Avatar (Image Upload)
+- [x] Follow User
+- [x] Unfollow User
+- [ ] See Followers and See Following with Pagination
+- [ ] Computed Fields
 - [ ] Search Users
-- [ ] See Followers
-- [ ] See Following
 
 ## Photos
 
