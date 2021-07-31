@@ -9,7 +9,8 @@
 - [x] Change Avatar (Image Upload)
 - [x] Follow User
 - [x] Unfollow User
-- [ ] See Followers and See Following with Pagination
+- [ ] See Followers with Pagination
+- [ ] See Following with Pagination
 - [ ] Computed Fields
 - [ ] Search Users
 
