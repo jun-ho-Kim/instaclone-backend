@@ -18,7 +18,7 @@ export default {
                 where: { userName }
             }).following({
                 take: 3,
-                skip: 0,
+                skip: lastId? 1 : 0,
                 ...lastId && {cursor: {id: lastId}},
             });
             return {
