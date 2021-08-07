@@ -2,7 +2,7 @@ import client from "../client";
 
 export default {
     User: {
-        totalFollowers: ({id}, args) => client.user
+        totalFollowers: ({id}) => client.user
             .count({
                 where: {
                     following: {
