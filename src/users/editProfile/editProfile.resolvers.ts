@@ -1,9 +1,9 @@
-import client from "../../client";
 import bcrypt from "bcrypt";
 import {createWriteStream} from 'fs'
 import { protectResolver } from "../users.utils";
+import { Resolvers } from "../../types";
 
-export default {
+const resolvers: Resolvers = {
     Mutation: {
         editProfile: protectResolver(
             async(_,
@@ -16,9 +16,13 @@ export default {
                     bio,
                     avartar
                 },
-                {loggedInUser, protectResolver}
+                {
+                    loggedInUser
+                }, 
+                {
+                    client
+                },
             ) => {
-                protectResolver(loggedInUser);
                 let fileUrl = null;
                 let uglyPassword = null;
                 if(newPassword) {
@@ -53,3 +57,5 @@ export default {
         ),
     },
 };
+
+export default resolvers;

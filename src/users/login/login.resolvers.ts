@@ -1,10 +1,10 @@
-import client from "../../client";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
+import { Resolvers } from "../../types";
 
-export default {
+const resovlers: Resolvers = {
     Mutation: {
-        login: async(_, {email, password}) => {
+        login: async(_, {email, password}, {client}) => {
             const user = await client.user.findFirst({where: {email}})
             if(!user) {
                 return {
@@ -30,3 +30,5 @@ export default {
         }
     }
 }
+
+export default resovlers;
