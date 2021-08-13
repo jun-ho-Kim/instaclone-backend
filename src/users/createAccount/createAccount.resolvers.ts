@@ -1,9 +1,9 @@
-import bcrypt from 'bcrypt';
-import { Resolvers } from "../../types";
+import * as bcrypt from 'bcrypt'
+import { Resolvers } from "../../types"
 
 const resolvers: Resolvers = {
     Mutation: {
-        createAccount: async(_, {
+        createAccount: async (_, {
             firstName,
             lastName,
             userName,
@@ -26,7 +26,7 @@ const resolvers: Resolvers = {
                         ]
                     }
                 });
-                if(existingUser) {
+                if (existingUser) {
                     throw new Error("This username/password is already taken");
                 };
                 const uglypassword = await bcrypt.hash(password, 10);
@@ -42,7 +42,7 @@ const resolvers: Resolvers = {
                 return {
                     ok: true
                 };
-            } catch(e) {
+            } catch (e) {
                 return e;
             };
         },

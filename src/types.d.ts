@@ -6,9 +6,9 @@ export type Context = {
 }
 
 export type Resolver = (
-    root: any,   
-    args: any, 
-    context: Context, 
+    root: any,
+    args: any,
+    context: Context,
     info: any
 ) => any;
 
@@ -20,7 +20,7 @@ export type Resolvers = {
         // 여기는 함수를 가지며, Resolver type을 return 할 것이다.
         //Resovler type은 기본적으로 function이 될 것이다.
         // 기본적으로 graphQL withFilter function이 될 것이다.
-        [key: string] : Resolver
+        [key: string]: Resolver
     }
 
 }

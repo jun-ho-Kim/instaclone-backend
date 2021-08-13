@@ -1,16 +1,16 @@
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import client from "../client";
 import { Resolver } from '../types';
 
 export const getUser = async (token) => {
     try {
-        if(!token) {
+        if (!token) {
             return null;
         }
-        const id = await jwt.verify(token, process.env.SECRET_KEY);
-        const IntId = +id;
-        const user = await client.user.findUnique({where: {id: IntId}});
-        if(user) {
+        const { id }: any = await jwt.verify(token, process.env.SECRET_KEY);
+        const IntId = id;
+        const user = await client.user.findUnique({ where: { id: IntId } });
+        if (user) {
             return user;
         } else {
             return null;
@@ -21,7 +21,7 @@ export const getUser = async (token) => {
 };
 
 export const protectResolver = (ourResolver: Resolver) => (root, args, context, info) => {
-    if(!context.loggedInUser) {
+    if (!context.loggedInUser) {
         return {
             ok: false,
             error: "유저를 찾을 수 없습니다."
