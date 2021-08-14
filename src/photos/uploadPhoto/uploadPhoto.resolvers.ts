@@ -12,8 +12,6 @@ const resolvers: Resolvers = {
         uploadPhoto: protectResolver(
             async (_: unknown, { file, caption }, { loggedInUser }) => {
                 try {
-
-                    console.log("loggend USer1", loggedInUser)
                     let hashtagObj = []
                     if (caption) {
                         const hashtags = caption.match(/#[\w]+/g)
@@ -22,10 +20,6 @@ const resolvers: Resolvers = {
                             create: { hashtag }
                         }))
                     }
-
-                    console.log("loggend USer", loggedInUser)
-
-
 
                     const upload = await client.photo.create({
                         data: {
@@ -43,7 +37,6 @@ const resolvers: Resolvers = {
                             }),
                         },
                     })
-                    console.log('upload', upload)
 
                     return upload
 

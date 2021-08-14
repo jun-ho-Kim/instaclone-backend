@@ -12,6 +12,7 @@ export default {
                     }
                 }
             }),
+
         totalFollowing: ({ id }) => client.user
             .count({
                 where: {
@@ -22,12 +23,14 @@ export default {
                     }
                 }
             }),
+
         isMe: ({ id }, _, { loggedInUser }) => {
             if (!loggedInUser) {
                 return false;
             }
             return id === loggedInUser.id
         },
+
         isFollowing: async ({ id }, _, { loggedInUser }) => {
             const exists = await client.user
                 .count({
@@ -38,9 +41,13 @@ export default {
                         }
                     }
                 });
-            console.log("exist", exists)
             return Boolean(exists);
-        }
+        },
 
+        photos: ({ id }) => client.user.findUnique({
+            where: {
+                id
+            }
+        }).photos()
     }
 }

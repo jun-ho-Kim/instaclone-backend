@@ -9,15 +9,15 @@
 - [x] Change Avatar (Image Upload)
 - [x] Follow User
 - [x] Unfollow User
-- [ ] See Followers with Pagination
-- [ ] See Following with Pagination
-- [ ] Computed Fields
-- [ ] Search Users
+- [x] See Followers with Pagination
+- [x] See Following with Pagination
+- [x] Computed Fields
+- [x] Search Users
 
 ## Photos
 
-- [ ] See Photo
-- [ ] Upload Photo
+- [x] See Photo
+- [x] Upload Photo
 - [ ] Edit Photo
 - [ ] Like / Unlike Photo
 - [ ] See Photo Likes

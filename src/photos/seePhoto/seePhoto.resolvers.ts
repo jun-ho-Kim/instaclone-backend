@@ -1,7 +1,6 @@
 import client from "../../client";
 import { Resolvers } from "../../types";
 
-
 const resolvers: Resolvers = {
     Query: {
         seePhoto: async (
