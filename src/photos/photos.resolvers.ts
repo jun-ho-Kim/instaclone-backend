@@ -5,13 +5,19 @@ import { Resolvers } from "../types";
 const resolvers: Resolvers = {
     Photo: {
         user: ({ userId }) => {
-            console.log('userId', userId)
             return client.user.findUnique({
                 where: {
                     id: userId
                 }
             })
         },
+        isMine: ({ userid }, _, { loggedInUser }) =>
+            userid === loggedInUser?.id,
+        // if (userid !== loggedInUser) {
+        //     return false
+        // } else {
+        //     return true
+        // }
         hashtags: ({ id }) =>
             client.hashtag.findMany({
                 where: {
