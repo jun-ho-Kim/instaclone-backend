@@ -18,15 +18,21 @@
 
 - [x] See Photo
 - [x] Upload Photo
-- [ ] Edit Photo
-- [ ] Like / Unlike Photo
-- [ ] See Photo Likes
-- [ ] See Feed
-- [ ] Search Photos
-- [ ] See Hashtags
+- [x] Edit Photo
+- [x] Like / Unlike Photo
+- [x] See Photo Likes
+- [x] See Feed
+- [x] Search Photos
+- [x] See Hashtags
+- [ ] See Photo Comments
+- [ ] Is Mine (Delete Photo)
 
 ## Comments
 
-- [ ] Comment on Photo
+- [x] Comment on Photo
 - [ ] Edit Comment
-- [ ] Delete Comment
+- [ ] Delete Comment (Is Mine)
+
+## Extras
+
+- [ ] S3 Image Upload
