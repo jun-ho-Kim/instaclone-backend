@@ -25,7 +25,7 @@ export const resolvers: Resolvers = {
                         error: "댓글을 삭제할 권한이 없습니다."
                     }
                 } else {
-                    return client.comment.update({
+                    await client.comment.update({
                         where: {
                             id,
                         },
@@ -33,6 +33,9 @@ export const resolvers: Resolvers = {
                             payload,
                         }
                     })
+                    return {
+                        ok: true
+                    }
                 }
             }
         )
