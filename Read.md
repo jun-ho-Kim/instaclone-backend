@@ -24,15 +24,27 @@
 - [x] See Feed
 - [x] Search Photos
 - [x] See Hashtags
-- [ ] See Photo Comments
-- [ ] Is Mine (Delete Photo)
+- [x] See Photo Comments
+- [x] Delete Photo
 
 ## Comments
 
 - [x] Comment on Photo
-- [ ] Edit Comment
-- [ ] Delete Comment (Is Mine)
+- [x] Delete Comment
+- [x] Edit Comment
+
+## Refactor
+
+- [x] Mutation Responses
 
 ## Extras
 
-- [ ] S3 Image Upload
+- [x] S3 Image Upload
+
+## DMs
+
+- [ ] Create Room
+- [ ] See Room
+- [ ] See Rooms
+- [ ] Send Message
+- [ ] Realtime Messages
