@@ -2,6 +2,7 @@ import * as bcrypt from "bcrypt"
 import { createWriteStream } from 'fs'
 import { protectResolver } from "../users.utils"
 import { Resolvers } from "../../types"
+import { uploadToS3 } from "../../shared/shared.utils";
 
 const resolvers: Resolvers = {
     Mutation: {
@@ -17,10 +18,7 @@ const resolvers: Resolvers = {
                     avartar
                 },
                 {
-                    loggedInUser
-                },
-                {
-                    client
+                    loggedInUser, client
                 },
             ) => {
                 let fileUrl = null;
@@ -30,14 +28,15 @@ const resolvers: Resolvers = {
                 }
                 console.log("loggedInUser", Boolean(loggedInUser));
                 if (avartar) {
-                    const { filename, createReadStream } = await avartar;
-                    const newFileName = loggedInUser.userName + Date.now() + filename
-                    const readStream = createReadStream();
-                    const writeStream = createWriteStream(process.cwd() + '/uploads/' + newFileName);
-                    fileUrl = `http://localhost:4000/static/${newFileName}`
-                    readStream.pipe(writeStream);
+                    fileUrl = await uploadToS3(avartar, loggedInUser.id, "avartar")
+                    // const { filename, createReadStream } = await avartar;
+                    // const newFileName = loggedInUser.userName + Date.now() + filename
+                    // const readStream = createReadStream();
+                    // const writeStream = createWriteStream(process.cwd() + '/uploads/' + newFileName);
+                    // fileUrl = `http://localhost:4000/static/${newFileName}`
+                    // readStream.pipe(writeStream);
                 }
-                await client.user.update({
+                const updateUser = await client.user.update({
                     where: {
                         id: loggedInUser.id
                     },
@@ -51,9 +50,18 @@ const resolvers: Resolvers = {
                         ...(avartar && { avartar: fileUrl }),
                     }
                 });
-                return {
-                    ok: true,
+                if (updateUser.id) {
+                    return {
+                        ok: true,
+                    }
+                } else {
+                    return {
+                        ok: false,
+                        error: '프로필 수정에 취소했습니다.'
+                    }
                 }
+
+
             }
         ),
     },

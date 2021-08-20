@@ -1,6 +1,8 @@
 import client from "../../client";
+import { uploadToS3 } from "../../shared/shared.utils";
 import { Resolvers } from "../../types";
 import { protectResolver } from "../../users/users.utils";
+import { processHastags } from "../photos.utils";
 
 interface UploadPhotoTypes {
     file: string
@@ -14,13 +16,10 @@ const resolvers: Resolvers = {
                 try {
                     let hashtagObj = []
                     if (caption) {
-                        const hashtags = caption.match(/#[\w]+/g)
-                        hashtagObj = hashtags.map((hashtag: any) => ({
-                            where: { hashtag },
-                            create: { hashtag }
-                        }))
+                        hashtagObj = processHastags(caption)
                     }
 
+                    const fileUrl = await uploadToS3(file, loggedInUser.id, "uploads")
                     const upload = await client.photo.create({
                         data: {
                             user: {
@@ -28,7 +27,7 @@ const resolvers: Resolvers = {
                                     id: loggedInUser.id
                                 }
                             },
-                            file,
+                            file: fileUrl,
                             caption,
                             ...(hashtagObj.length > 0 && {
                                 hashtags: {
