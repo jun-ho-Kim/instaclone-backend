@@ -85,11 +85,12 @@ model Room {
 
 model Message {
   id        Int      @id @default(autoincrement())
-  paylod    String
+  payload   String
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
   room      Room     @relation(fields: [roomId], references: [id])
   roomId    Int
+  read      Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { Resolvers } from "../../types"
 
-const resovlers: Resolvers = {
+const resolvers: Resolvers = {
     Mutation: {
         login: async (_, { email, password }, { client }) => {
             const user = await client.user.findFirst({ where: { email } })
@@ -12,9 +12,9 @@ const resovlers: Resolvers = {
                     error: "이메일이 존재하지 않습니다."
                 }
             };
-            console.log("user.password", user.password)
+
             const passwordOK = await bcrypt.compare(password, user.password);
-            console.log("password OK", passwordOK)
+
             if (!passwordOK) {
                 return {
                     ok: false,
@@ -32,4 +32,4 @@ const resovlers: Resolvers = {
     }
 }
 
-export default resovlers;
+export default resolvers;

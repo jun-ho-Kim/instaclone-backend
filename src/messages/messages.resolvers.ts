@@ -3,7 +3,7 @@ import { Resolvers } from "../types";
 
 export const resolvers: Resolvers = {
     Room: {
-        user: async (id: number, _, { client }) =>
+        user: async (id: number) =>
             client.room.findUnique({
                 where: {
                     id,
@@ -15,6 +15,24 @@ export const resolvers: Resolvers = {
                 where: {
                     roomId: id
                 }
+            }),
+
+        unreadTotal: async (id: number, __, { loggedInUser }) => {
+            if (!loggedInUser) {
+                return 0
+            }
+
+            return client.message.count({
+                where: {
+                    read: false,
+                    roomId: id,
+                    user: {
+                        id: {
+                            not: loggedInUser.id
+                        }
+                    }
+                }
             })
+        }
     }
 }
