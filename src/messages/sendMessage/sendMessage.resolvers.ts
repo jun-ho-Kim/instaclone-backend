@@ -45,24 +45,24 @@ export const resolvers: Resolvers = {
                         error: '존재하지 않는 대화방입니다.'
                     }
                 }
-                await client.message.create({
-                    data: {
-                        payload,
-                        room: {
-                            connect: {
-                                id: room.id
-                            }
-                        },
-                        user: {
-                            connect: {
-                                id: loggedInUser.id
-                            }
+            }
+            await client.message.create({
+                data: {
+                    payload,
+                    room: {
+                        connect: {
+                            id: room.id
+                        }
+                    },
+                    user: {
+                        connect: {
+                            id: loggedInUser.id
                         }
                     }
-                })
-                return {
-                    ok: true
                 }
+            })
+            return {
+                ok: true
             }
         }
     }

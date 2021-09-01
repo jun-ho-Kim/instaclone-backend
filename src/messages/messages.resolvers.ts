@@ -3,21 +3,21 @@ import { Resolvers } from "../types";
 
 export const resolvers: Resolvers = {
     Room: {
-        user: async (id: number) =>
+        user: async ({ id }) =>
             client.room.findUnique({
                 where: {
                     id,
                 }
             }).users(),
 
-        messages: async (id: number) =>
+        messages: async ({ id }) =>
             client.message.findMany({
                 where: {
                     roomId: id
                 }
             }),
 
-        unreadTotal: async (id: number, __, { loggedInUser }) => {
+        unreadTotal: async ({ id }, __, { loggedInUser }) => {
             if (!loggedInUser) {
                 return 0
             }
@@ -34,5 +34,12 @@ export const resolvers: Resolvers = {
                 }
             })
         }
+    },
+    Message: {
+        user: async ({ id }) => client.message.findFirst({
+            where: {
+                id
+            }
+        }).user()
     }
 }
