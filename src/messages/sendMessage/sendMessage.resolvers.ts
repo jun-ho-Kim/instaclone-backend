@@ -48,7 +48,7 @@ export const resolvers: Resolvers = {
                     }
                 }
             }
-            const message = client.message.create({
+            const message = await client.message.create({
                 data: {
                     payload,
                     room: {
