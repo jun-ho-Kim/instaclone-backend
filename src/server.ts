@@ -14,15 +14,30 @@ const PORT = process.env.PORT;
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: async ({ req }) => {
-        if (req) {
+    context: async (ctx) => {
+        if (ctx.req) {
             return {
-                loggedInUser: await getUser(req.headers.token),
+                loggedInUser: await getUser(ctx.req.headers.token),
                 client,
                 protectResolver,
             };
+        } else {
+            return {
+                loggenInUser: ctx.connection.context.loggedInUser
+            }
         }
     },
+    subscriptions: {
+        onConnect: ({ token }: any) => {
+            if (!token) {
+                throw new Error('You can`t listen.')
+            }
+            const loggedInUser = getUser(token)
+            return {
+                loggedInUser
+            }
+        }
+    }
 });
 
 app.use('/static', express.static("uploads"))

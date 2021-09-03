@@ -7,9 +7,19 @@ export default {
     Subscription: {
         roomUpdates: {
             subscribe: async (root, args, context, info) => {
-                const room = await client.room.findUnique({
+                // publish하기 전에 발생하는 error 코드
+                const room = await client.room.findFirst({
                     where: {
-                        id: args.id
+                        id: args.id,
+                        users: {
+                            some: {
+                                id: context.id
+                            }
+                        }
+
+                    },
+                    select: {
+                        id: true
                     }
                 })
                 if (!room) {
@@ -17,11 +27,28 @@ export default {
                 }
                 return withFilter(
                     () => pubsub.asyncIterator(NEW_MESSAGE),
-                    ({ roomUpdates }, { id }) => {
-                        console.log('paylaod', roomUpdates)
-                        console.log('id', id)
+                    async ({ roomUpdates }, { id }, { loggedInUser }) => {
+                        //listening하는 동안 유저가 room에서 나가는 경우 error 발생코드
+                        if (roomUpdates.roomId === id) {
+                            const room = await client.room.findFirst({
+                                where: {
+                                    id,
+                                    users: {
+                                        some: {
+                                            id: loggedInUser.id
+                                        }
+                                    }
 
-                        return roomUpdates.roomId === id
+                                },
+                                select: {
+                                    id: true,
+                                }
+                            })
+                            if (!room) {
+                                return false
+                            }
+                        }
+                        return true
                     }
                 )(root, args, context, info)
             }
